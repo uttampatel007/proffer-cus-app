@@ -1,0 +1,23 @@
+
+KNOWN ISSUES TO BE RESOLVED:
+
+OTP INPUT
+    otp paste
+    tab click
+
+Handle request catch in request maker
+
+
+
+
+
+
+@@@ Stater @@
+<template>
+    <ion-page></ion-page>
+</template>
+
+<script setup>
+import { IonPage } from '@ionic/vue';
+
+</script>
