@@ -21,3 +21,18 @@ Handle request catch in request maker
 import { IonPage } from '@ionic/vue';
 
 </script>
+
+
+@@cmds
+npm install -g @ionic/cli
+
+for ios build:
+ionic build
+npx cap copy
+npx cap sync
+npx cap open ios
+
+ionic build
+npx cap copy
+npx cap sync
+npx cap open android 

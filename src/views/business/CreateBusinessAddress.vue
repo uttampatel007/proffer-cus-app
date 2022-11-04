@@ -9,8 +9,7 @@
             <div class="business-form">
                 <ion-title size="large">Register Address</ion-title>
                 <br>
-                {{business_address}}
-                <br>
+              
                 <form class="" @submit.prevent="createBusinessAddress()">
                     <ion-item>
                         <ion-label position="stacked">Address Line 1</ion-label>
@@ -48,7 +47,7 @@
                     </ion-item>
                     <br>
                     <InputValidationText :text=validationMsg /><br>
-                    <ion-button type="submit" shape="round">Next</ion-button>
+                    <ion-button type="submit" shape="round">NEXT</ion-button>
                 </form>
             </div>
         </ion-content>
@@ -104,12 +103,18 @@ async function createBusinessAddress(){
     console.log(response)
     if (response.code === 200){
         validationMsg.value = ""
+
         await TokenService.updateAddress(response.data.address)
-        console.log(await TokenService.getUser())
         router.push({
                 path: '/tabs/tab1'
         })
-    } else {
+    } else if (response.code === 400 ){
+        console.log(response)
+        router.push({
+                path: '/tabs/tab1'
+        })
+    }
+    else {
         validationMsg.value = response[0]
     }
 }

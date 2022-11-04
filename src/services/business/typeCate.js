@@ -7,7 +7,7 @@ export default class typeCate {
         return response;
     }
     async getBusinessCategory() {
-        let endpoint = "business/type-category/";
+        let endpoint = "business/category/";
         let response = await new RequestMaker().GET(endpoint);
         return response;
     }
