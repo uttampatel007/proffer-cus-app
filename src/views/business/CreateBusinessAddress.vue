@@ -2,7 +2,7 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>MAA BUSINESS</ion-title>
+                <ion-title>proffer</ion-title>
             </ion-toolbar>
         </ion-header>
         <ion-content :fullscreen="true">
