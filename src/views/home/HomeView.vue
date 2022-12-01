@@ -50,7 +50,7 @@
                 <!-- card listing -->
                 <div class="card-listing" v-for="offer in offerData" :key="offer.id"
                     @click="openModal(offer.id, offer.offer_type_label, offer.business_address, offer.business_name, offer.business_logo)">
-                    <OfferListCard :offerType="offer.offer_type_label" :offerTagLine="offer.tag_line"
+                    <OfferListCard :offerType="offer.offer_type_label" :offerTagLine="offer.tag_line" :offerExpiryLine="offer.offer_expiry_line"
                         :offerImage="offer.offer_image" :BusinessName="offer.business_name"
                         :BusinessAddress="offer.business_address" :BusinessLogo="offer.business_logo" />
                 </div>
@@ -62,7 +62,8 @@
 <script setup>
 import { reactive, ref } from 'vue';
 import {
-    IonPage, IonIcon, IonItem, IonSelect, IonSelectOption,
+    IonPage, IonIcon, 
+    IonItem, IonSelect, IonSelectOption,
     IonContent, IonSearchbar, modalController, onIonViewWillEnter
 } from '@ionic/vue';
 import { locationOutline, funnelOutline } from 'ionicons/icons';
@@ -217,7 +218,21 @@ loadCityOffers()
 }
 </style>
 
-
+<!-- .location-filter2 {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0px 10px 0px;
+}
+<div class="location-filter2">
+    <div class="location">
+     <ion-icon :icon="locationOutline" size="small"></ion-icon>
+     {{ cityName }}, {{ stateName }}
+    </div>
+    <div class="filter">
+     <ion-icon :icon="funnelOutline" size="small"></ion-icon>
+     Filter
+    </div>
+ </div> -->
 // const checkedCategories = ref([])
 
 // const tryChecked = ref([])

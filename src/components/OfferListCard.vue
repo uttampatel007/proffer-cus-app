@@ -9,7 +9,7 @@
                             <br>
                             <span class="offer-title">{{props.offerTagLine}}</span>
                             <br>
-                            <span class="offer-validity">Hurry up only 1 days left!</span>
+                            <span class="offer-validity">{{props.offerExpiryLine}}</span>
                             <div class="business-card-info" v-if="props.BusinessName">
                                 <div class="divider"></div>
                                 <div class="business-promo">
@@ -45,7 +45,7 @@ import {
 import BusinessPromo from "../components/BusinessPromo.vue"
 
 const props = defineProps([
-    "offerType", "offerTagLine", "offerImage", 
+    "offerType", "offerTagLine", "offerImage", "offerExpiryLine",
     "BusinessName", "BusinessAddress", "BusinessLogo"
 ])
 

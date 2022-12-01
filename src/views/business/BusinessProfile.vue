@@ -10,7 +10,7 @@
                         <ion-row>
                             <ion-col id="col-business-card-img">
                                 <div class="business-card-image">
-                                    <ion-img src="/assets/images/3873446.jpg">
+                                    <ion-img :src=businessData.logo>
                                     </ion-img>
                                 </div>
                             </ion-col>
@@ -72,7 +72,6 @@ async function getProfileData() {
     const businessId = route.params["businessId"]
     const response = await new Offer().getBusinessProfile(businessId)
     if (response.code === 200) {
-        console.log(response)
         businessData.value = response.data.business_data
         businessAddress.value = response.data.business_data.address[0]
         businessCity.value = response.data.business_data.address[0].city
@@ -112,7 +111,7 @@ async function openModal(offerId, offerType, BusinessAddress, BusinessName, Busi
 }
 
 .business-card-image {
-    /* border: 1px solid black; */
+    border: 0.01px solid black;
     border-radius: 10px;
     overflow: hidden;
     width: 100%;

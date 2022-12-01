@@ -2,7 +2,6 @@
     <!-- <ion-modal ref="modal" trigger="detail-modal" :initial-breakpoint="0.85" :breakpoints="[0, 0.25, 0.5, 0.75]"> -->
 
     <ion-content class="ion-padding">
-        <ion-item-sliding>
         <div class="detail-model-container">
             <!-- Offer title -->
             <h3>{{ offerDetail.tag_line }}</h3>
@@ -36,7 +35,6 @@
                 </ul>
             </div>
         </div>
-    </ion-item-sliding>
     </ion-content>
     <ion-fab slot="fixed" vertical="bottom" horizontal="end">
         <ion-fab-button @click="redirectHome()">
