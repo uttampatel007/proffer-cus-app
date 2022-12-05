@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
+import TabPage from '../views/TabPage.vue'
 
 const routes = [
   {
     path: '/',
-    redirect: '/customer/address',
+    redirect: '/tabs',
   },
   {
     path: '/customer/address',
@@ -11,15 +12,32 @@ const routes = [
     name: "customerAddress"
   },
   {
-    path: '/home',
-    component: () => import('@/views/home/HomeView.vue'),
-    name: "home"
-  },
-  {
     path: '/business/profile/:businessId',
     name: "businessProfile",
     component: () => import('@/views/business/BusinessProfile.vue'),
   },
+  {
+    path: '/tabs/',
+    component: TabPage,
+    children: [
+      {
+        path: '',
+        redirect: '/tabs/home'
+      },
+      {
+        path: 'home',
+        component: () => import('@/views/home/HomeView.vue')
+      },
+      {
+        path: 'coupon',
+        component: () => import('@/views/coupon/CouponView.vue')
+      },
+      {
+        path: 'setting',
+        component: () => import('@/views/setting/SettingView.vue')
+      },
+    ]
+  }
 ]
 
 const router = createRouter({

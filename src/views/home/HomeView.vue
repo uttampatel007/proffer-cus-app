@@ -1,10 +1,16 @@
 <template>
     <ion-page>
         <div class="container-fixed">
-            <BrandTitle />
+            <div class="brand-header">
+                <BrandTitle />
+                <div @click="redirectAddress" class="location-header">
+                    <ion-icon :icon="locationOutline" size="small"></ion-icon>
+                    {{ cityName }}, {{ stateName }}
+                </div>
+            </div>
             <!-- search bar -->
-            <ion-searchbar id="searchbar" enterkeyhint="enter" mode="ios" @ionFocus="() => showSearch = true"
-                placeholder="Search Shop/Business" @ionChange="handleSearch($event)" :debounce="600"></ion-searchbar>
+            <!-- <ion-searchbar id="searchbar" enterkeyhint="enter" mode="ios" @ionFocus="() => showSearch = true"
+                placeholder="Search Shop/Business" @ionChange="handleSearch($event)" :debounce="600"></ion-searchbar> -->
 
             <!-- search results -->
             <div class="search-result" v-if="showSearch">
@@ -15,44 +21,60 @@
                     <br>
                 </div>
                 <div v-if="noResult">
-                    <p>{{noResult}}</p>
+                    <p>{{ noResult }}</p>
                 </div>
             </div>
             <!-- location filter -->
             <div>
-            <div class="location-filter">
-                <ion-item>
-                    <div @click="redirectAddress">
-                        <ion-icon :icon="locationOutline" size="small"></ion-icon>
-                        {{ cityName }}, {{ stateName }}
-                    </div>
-                </ion-item>
-            </div>
-                       
-            <div class="location-filter">
-                <ion-item>
-                    <ion-icon :icon="funnelOutline" size="small"></ion-icon>
-                    <ion-select placeholder="Filter" :multiple="true" @ionChange="getCatValues($event)">
-                        <ion-select-option v-for="cat in categories" :key="cat.id"
-                            :value=cat.id>{{cat.name}}
-                        </ion-select-option>
-                    </ion-select>
-                </ion-item>
-            </div>
-                        
+                <div class="location-filter">
+                    <ion-grid>
+                        <ion-row class="ion-justify-content-between">
+                            <ion-col>
+                                <ion-item>
+                                    <ion-icon :icon="funnelOutline" size="small" color="white"></ion-icon>
+                                    <ion-select placeholder="Category" :multiple="true"
+                                        @ionChange="getCatValues($event)">
+                                        <ion-select-option v-for="cat in categories" :key="cat.id" :value=cat.id>{{
+                                                cat.name
+                                        }}
+                                        </ion-select-option>
+                                    </ion-select>
+                                </ion-item>
+                            </ion-col>
+                            <!-- <ion-col>
+                                <ion-item>
+                                    <ion-icon :icon="funnelOutline" size="small"></ion-icon>
+                                    <ion-select placeholder="Offer Type" :multiple="true"
+                                        @ionChange="getCatValues($event)">
+                                        <ion-select-option v-for="cat in categories" :key="cat.id" :value=cat.id>{{
+                                                cat.name
+                                        }}
+                                        </ion-select-option>
+                                    </ion-select>
+                                </ion-item>
+                            </ion-col> -->
+                        </ion-row>
+                    </ion-grid>
+
+                </div>
+
             </div>
         </div>
         <ion-content>
             <div class="container" v-if="offerData">
                 <div>
-                    <h5>Top Offers</h5>
+                    <h6>Offers</h6>
                 </div>
+                <!-- <div class="home-offer-list-header">
+                    <p>Offers</p>
+                </div> -->
                 <!-- card listing -->
                 <div class="card-listing" v-for="offer in offerData" :key="offer.id"
                     @click="openModal(offer.id, offer.offer_type_label, offer.business_address, offer.business_name, offer.business_logo)">
-                    <OfferListCard :offerType="offer.offer_type_label" :offerTagLine="offer.tag_line" :offerExpiryLine="offer.offer_expiry_line"
-                        :offerImage="offer.offer_image" :BusinessName="offer.business_name"
-                        :BusinessAddress="offer.business_address" :BusinessLogo="offer.business_logo" />
+                    <OfferListCard :offerType="offer.offer_type_label" :offerTagLine="offer.tag_line"
+                        :offerExpiryLine="offer.offer_expiry_line" :offerImage="offer.offer_image"
+                        :BusinessName="offer.business_name" :BusinessAddress="offer.business_address"
+                        :BusinessLogo="offer.business_logo" />
                 </div>
             </div>
         </ion-content>
@@ -62,16 +84,18 @@
 <script setup>
 import { reactive, ref } from 'vue';
 import {
-    IonPage, IonIcon, 
+    IonPage, IonIcon,
     IonItem, IonSelect, IonSelectOption,
-    IonContent, IonSearchbar, modalController, onIonViewWillEnter
+    IonContent, IonGrid, IonCol, IonRow,
+    // IonSearchbar, 
+    modalController, onIonViewWillEnter
 } from '@ionic/vue';
 import { locationOutline, funnelOutline } from 'ionicons/icons';
 
 import BrandTitle from "../../components/BrandTitle.vue";
 import OfferListCard from "../../components/OfferListCard.vue";
 import Offer from "../../services/offer/offer";
-import Business from "../../services/business/business"
+// import Business from "../../services/business/business"
 import TokenService from "../../utils/TokenService";
 import BusinessPromo from "../../components/BusinessPromo.vue";
 import typeCate from '../../services/business/typeCate';
@@ -84,8 +108,8 @@ const stateName = ref("")
 const cityId = ref(null)
 const noResult = ref("")
 
-const redirectAddress = function(){
-    router.push({"name":"customerAddress"})
+const redirectAddress = function () {
+    router.push({ "name": "customerAddress" })
 }
 
 const categories = ref([])
@@ -97,7 +121,7 @@ async function loadFilterCategory() {
     }
 }
 
-async function getCatValues($event){
+async function getCatValues($event) {
     loadCityOffers($event.detail.value)
 }
 
@@ -117,7 +141,6 @@ async function loadCityOffers(categories) {
     }
 
     if (response.code === 200) {
-        console.log(response)
         offerData.value = response.data
     }
 }
@@ -140,22 +163,22 @@ async function openModal(offerId, offerType, BusinessAddress, BusinessName, Busi
 
 const businessSearchResult = reactive({ "results": [] })
 
-async function handleSearch($event) {
-    if ($event.target.value.trim().length > 0) {
-        const response = await new Business().searchBusiness(
-            $event.target.value, cityId.value)
-        businessSearchResult.results = response
-        showSearch.value = true
-        if (response.length < 1){
-            noResult.value = "No results found"
-        }
-    }
-    else {
-        businessSearchResult.results = []
-        showSearch.value = false
-        noResult.value = ""
-    }
-}
+// async function handleSearch($event) {
+//     if ($event.target.value.trim().length > 0) {
+//         const response = await new Business().searchBusiness(
+//             $event.target.value, cityId.value)
+//         businessSearchResult.results = response
+//         showSearch.value = true
+//         if (response.length < 1) {
+//             noResult.value = "No results found"
+//         }
+//     }
+//     else {
+//         businessSearchResult.results = []
+//         showSearch.value = false
+//         noResult.value = ""
+//     }
+// }
 
 loadFilterCategory()
 onIonViewWillEnter(() => {
@@ -166,6 +189,15 @@ loadCityOffers()
 </script>
 
 <style>
+.brand-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.brand-header .location-header {
+    margin-top: 15px;
+}
+
 #searchbar {
     padding-left: 0px;
     padding-right: 0px;
@@ -173,12 +205,13 @@ loadCityOffers()
 
 .container-fixed {
     padding: 0px 10px 0px 10px;
-
-    border-bottom: 1px solid #6b6a6a30;    
+    /* background-color: black;
+    color: white; */
+    border-bottom: 1px solid #6b6a6a30;
 }
 
 .container {
-    padding: 15px;
+    padding: 10px;
 }
 
 #filter-modal {
@@ -210,11 +243,25 @@ loadCityOffers()
     --border-style: none;
     --padding-start: 0px;
     font-size: 15px;
-    color: black;
+    /* --background: black;
+    --color: #fff; */
+
 }
+
 .location-filter ion-item ion-select {
-    --placeholder-color: black !important;
     --placeholder-opacity: 100;
+}
+
+.location-filter ion-grid {
+    --ion-grid-padding: 0px;
+}
+.location-filter ion-col {
+    --ion-grid-column-padding: 0px;
+}
+
+.container .home-offer-list-header p {
+    margin-top: 0px;
+    margin-bottom: 10px;
 }
 </style>
 

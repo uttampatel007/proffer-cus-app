@@ -1,6 +1,6 @@
 <template>
     <div class="intro-div">
-        <ion-img src="/assets/images/cheerful-guy-with-helmet-shopping-bags-driving-yellow-scooter.jpg"></ion-img>
+        <ion-img src="/assets/images/banner.jpg"></ion-img>
     </div>
 </template>
 

@@ -18,7 +18,7 @@
             </ion-grid>
             <!-- Business Name and Address -->
             <div class="business-promo">
-                <BusinessPromo :BusinessId="offerDetail.business" :BusinessLogo="props.BusinessLogo"
+                <BusinessPromoBig :BusinessId="offerDetail.business" :BusinessLogo="props.BusinessLogo"
                     :BusinessName="props.BusinessName" :BusinessAddress="props.BusinessAddress"
                     :redirectEnable="true" />
             </div>
@@ -52,7 +52,7 @@ import {
     IonContent, IonImg, IonCol,
 } from '@ionic/vue';
 import { chevronBackOutline } from 'ionicons/icons';
-import BusinessPromo from "../components/BusinessPromo.vue"
+import BusinessPromoBig from "../components/BusinessPromoBig.vue"
 import Offer from "../services/offer/offer"
 import { modalController } from "@ionic/vue";
 
@@ -76,9 +76,9 @@ loadOfferDetail()
 </script>
 
 <style>
-ion-modal {
+/* ion-modal {
     --border-radius: 8px !important;
-}
+} */
 
 .detail-model-container h3 {
     text-align: center;
@@ -120,7 +120,7 @@ ion-modal {
     margin-bottom: 50px;
 }
 
-.offer-info-list li{
+.offer-info-list li {
     text-align: justify;
 }
 

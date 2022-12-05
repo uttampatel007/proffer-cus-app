@@ -59,7 +59,7 @@ const props = defineProps([
 }
 
 .card {
-    /* border: 0.001px solid black; */
+    border: 0.001px solid black;
     border-radius: 10px;
     height: 100%;
     width: 100%;

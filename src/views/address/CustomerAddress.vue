@@ -90,7 +90,7 @@ async function createBusinessAddress() {
             "state": { "state_id": business_address.state.state_id, "name": business_address.state.name },
             "city": { "city_id": business_address.city.city_id, "name": business_address.city.name }
         })
-        router.push("/home")
+        router.push("/tabs/home")
     }
 }
 

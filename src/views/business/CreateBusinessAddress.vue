@@ -106,12 +106,12 @@ async function createBusinessAddress(){
 
         await TokenService.updateAddress(response.data.address)
         router.push({
-                path: '/tabs/tab1'
+                path: '/tabs/home'
         })
     } else if (response.code === 400 ){
         console.log(response)
         router.push({
-                path: '/tabs/tab1'
+                path: '/tabs/home'
         })
     }
     else {

@@ -6,7 +6,7 @@
         </div>
         <div class="business-data">
             <span class="business-title">{{props.BusinessName}}</span>
-            <span class="business-address">{{props.BusinessAddress}}</span>
+            <span v-if="props.BusinessAddress" class="business-address">{{props.BusinessAddress}}</span>
         </div>
     </div>
 </template>
@@ -61,9 +61,12 @@ async function redirect(){
     height: 100%;
     width: 100%;
 }
+.business-data .business-title {
+    font-size: 12px;
+}
 
-.business-address {
+.business-data .business-address {
     color: #6B6A6A;
-    font-size: 13px;
+    font-size: 10px;
 }
 </style>
