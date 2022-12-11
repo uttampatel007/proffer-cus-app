@@ -51,7 +51,7 @@ async function redirect(){
     height: 40px;
     min-height: 40px;
     min-width: 40px;
-    /* border: 1px solid black; */
+    border: 1px solid black;
     border-radius: 50%;
     overflow: hidden;
 }

@@ -100,6 +100,8 @@ import TokenService from "../../utils/TokenService";
 import BusinessPromo from "../../components/BusinessPromo.vue";
 import typeCate from '../../services/business/typeCate';
 import router from '../../router';
+import { useBackButton, useIonRouter } from '@ionic/vue';
+import { App } from '@capacitor/app';
 
 const showSearch = ref(false)
 const offerData = ref([])
@@ -180,6 +182,16 @@ const businessSearchResult = reactive({ "results": [] })
 //     }
 // }
 
+// for exiting app
+// https://ionicframework.com/docs/developing/hardware-back-button
+const ionRouter = useIonRouter();
+useBackButton(-1, () => {
+    if (!ionRouter.canGoBack()) {
+        App.exitApp();
+    }
+});
+
+
 loadFilterCategory()
 onIonViewWillEnter(() => {
     loadCityOffers()
@@ -255,6 +267,7 @@ loadCityOffers()
 .location-filter ion-grid {
     --ion-grid-padding: 0px;
 }
+
 .location-filter ion-col {
     --ion-grid-column-padding: 0px;
 }

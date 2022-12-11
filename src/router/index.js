@@ -4,7 +4,7 @@ import TabPage from '../views/TabPage.vue'
 const routes = [
   {
     path: '/',
-    redirect: '/tabs',
+    redirect: '/customer/address',
   },
   {
     path: '/customer/address',
