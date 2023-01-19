@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">proffer</string>
-    <string name="title_activity_main">proffer</string>
+    <string name="app_name">Proffers</string>
+    <string name="title_activity_main">Proffers</string>
     <string name="package_name">com.proffer.appid</string>
     <string name="custom_url_scheme">com.proffer.appid</string>
 </resources>

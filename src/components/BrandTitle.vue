@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3 class="heading">proffer</h3>
+        <h3 class="heading">Proffers</h3>
     </div>
 </template>
 

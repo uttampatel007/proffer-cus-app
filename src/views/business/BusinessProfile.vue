@@ -16,13 +16,22 @@
                             </ion-col>
                             <ion-col size="8">
                                 <div>
-                                    <h6 class="bus-name">{{ businessData.name }}</h6>
-                                    <span class="bus-address" v-if="businessAddress">{{ businessAddress.address_line1
+                                    <div class="profile-heading">
+                                        <h6 class="bus-name">{{ businessData.name }}</h6>
+                                    </div>
+                                    <span class="bus-address" v-if="businessAddress">{{
+                                            businessAddress.address_line1
                                     }},<br>
                                         {{ businessAddress.address_line2 }},<br>
-                                        {{ businessCity.name }}<br>
-                                        {{ businessState.name }}</span>
+                                        {{ businessCity.name }}, 
+                                        {{ businessState.name }}<br>
+                                        <span v-if="businessGMapUrl" class="map-class" @click="openMap(businessGMapUrl)">
+                                            Open map
+                                        </span>
+                                    </span>
+
                                 </div>
+
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -30,7 +39,7 @@
                 <div class="business-data">
                     <ul>
                         <li>Category: <span>{{ businessCategory.name }}</span></li>
-                        <li>Type: <span>{{ businessType.name }}</span></li>
+                        <!-- <li>Type: <span>{{ businessType.name }}</span></li> -->
                         <li v-if="businessData.mobile_no">Mobile no: <span>{{ businessData.mobile_no }}</span></li>
                         <li v-if="businessData.email">Email: <span>{{ businessData.email }}</span></li>
                         <li v-if="businessData.website"><span>{{ businessData.website }}</span></li>
@@ -58,8 +67,7 @@
                         <div class="card-listing" v-for="coupon in businessCoupons" :key="coupon.id"
                             @click="openCouponModal(coupon.id, coupon.coupon_type_label, coupon.business_name, coupon.business_logo)">
                             <CouponListCard :couponType="coupon.coupon_type_label" :couponTagLine="coupon.tag_line"
-                                :couponImage="coupon.coupon_image" :couponCode="coupon.coupon_code"
-                            />
+                                :couponImage="coupon.coupon_image" :couponCode="coupon.coupon_code" />
                         </div>
                     </div>
                 </div>
@@ -73,6 +81,8 @@ import {
     IonPage, IonContent, IonImg, IonGrid, IonRow, IonCol,
     IonSegment, IonSegmentButton, IonLabel,
 } from '@ionic/vue';
+// import { compassOutline } from 'ionicons/icons';
+
 import BrandTitle from "../../components/BrandTitle.vue"
 import OfferListCard from "../../components/OfferListCard.vue"
 import Offer from "../../services/offer/offer"
@@ -89,6 +99,7 @@ const businessCity = ref({})
 const businessState = ref({})
 const businessCategory = ref({})
 const businessType = ref({})
+const businessGMapUrl = ref("")
 
 const showCoupons = ref(false)
 const showOffers = ref(false)
@@ -103,6 +114,7 @@ async function getProfileData() {
             businessAddress.value = response.data.business_data.address[0]
             businessCity.value = response.data.business_data.address[0].city
             businessState.value = response.data.business_data.address[0].state
+            businessGMapUrl.value = response.data.business_data.address[0].g_map_url
         }
         businessCategory.value = response.data.business_data.category
         businessType.value = response.data.business_data.type
@@ -113,21 +125,20 @@ async function getProfileData() {
 }
 
 onBeforeMount(() => {
-    getProfileData()      
+    getProfileData()
 })
 
 const segmentInitialValue = ref(null)
 
-async function decideDisplay(offers, coupons){
-    console.log(coupons.length != 0)
+async function decideDisplay(offers, coupons) {
 
-    if (offers.length !== 0 && coupons.length !== 0){
+    if (offers.length !== 0 && coupons.length !== 0) {
         segmentInitialValue.value = "offers"
     }
-    else if (offers.length !== 0){
+    else if (offers.length !== 0) {
         segmentInitialValue.value = "offers"
     }
-    else if (coupons.length != 0){
+    else if (coupons.length != 0) {
         segmentInitialValue.value = "coupons"
     }
 }
@@ -166,7 +177,7 @@ async function openCouponModal(couponId, couponType, BusinessName, BusinessLogo)
 }
 
 async function segmentValue(event) {
-    if (event.detail.value == "offers"){
+    if (event.detail.value == "offers") {
         segmentInitialValue.value = "offers"
         showOffers.value = true
     }
@@ -182,6 +193,12 @@ async function segmentValue(event) {
     }
 
 }
+
+async function openMap(g_map_url){
+    console.log(g_map_url, "url")
+    window.open(g_map_url,'_system');
+}
+
 </script>
 
 <style>
@@ -211,6 +228,15 @@ async function segmentValue(event) {
     left: 0;
     bottom: 0;
     right: 0;
+}
+
+.profile-heading {
+    display: flex;
+    justify-content: space-between;
+}
+
+.map-class {
+    color: var(--ion-color-primary, #3880ff);
 }
 
 .bus-name {

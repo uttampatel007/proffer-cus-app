@@ -2,7 +2,7 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>proffer</ion-title>
+                <ion-title>Proffers</ion-title>
             </ion-toolbar>
         </ion-header>
         <ion-content :fullscreen="true">
