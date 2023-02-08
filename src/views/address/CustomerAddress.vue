@@ -86,6 +86,10 @@ async function createBusinessAddress() {
     else {
         console.log(business_address.city)
         // save cus address in local storage
+
+        localStorage.setItem('business_address_city', business_address.city.name)
+        localStorage.setItem('business_address_state', business_address.state.name)
+
         await TokenService.updateCusAddress({
             "state": { "state_id": business_address.state.state_id, "name": business_address.state.name },
             "city": { "city_id": business_address.city.city_id, "name": business_address.city.name }
@@ -95,7 +99,11 @@ async function createBusinessAddress() {
 }
 
 onMounted(async () => {
+    if (localStorage.getItem('business_address_state') && localStorage.getItem('business_address_city')) {
+      router.push("/tabs/home");
+    } 
     await getCountryState()
+
 })
 </script>
 
