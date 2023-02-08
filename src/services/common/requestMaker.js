@@ -4,8 +4,8 @@ import axios from "axios";
 import TokenService from "../../utils/TokenService"
 
 
-const ENDPOINT = process.env.VUE_APP_ROOT_API;
-// const ENDPOINT = "https://nccbuddy.pythonanywhere.com/"
+/* const ENDPOINT = process.env.VUE_APP_ROOT_API; */
+ const ENDPOINT = "https://nccbuddy.pythonanywhere.com/"
 
 export default class RequestMaker {
 
