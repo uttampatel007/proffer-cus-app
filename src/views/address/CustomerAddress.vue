@@ -4,6 +4,7 @@
             <CurvedImage />
             <div class="brand-heading">
                 <BrandTitle />
+                {{ lat }}
             </div>
             <div class="address-form">
                 <ion-label>Select City</ion-label>
@@ -50,6 +51,7 @@ import TokenService from "../../utils/TokenService"
 import InputValidationText from '../../components/InputValidationText.vue'
 import CurvedImage from "../../components/CurvedImage.vue"
 import BrandTitle from "../../components/BrandTitle.vue"
+import { Geolocation } from '@capacitor/geolocation';
 
 
 const validationMsg = ref("")
@@ -61,11 +63,19 @@ const business_address = reactive({
     "state": null,
     "city": null,
 })
+const lat = ref("")
+
+const printCurrentPosition = async () => {
+  const coordinates = await Geolocation.getCurrentPosition();
+  lat.value = coordinates['coords']['latitude']
+  console.log('Current position:', coordinates['coords']['latitude']);
+};
 
 async function getCountryState() {
     const response = await new World().getCountryStates()
     country.arr = response.data
     state.arr = response.data[0].states
+    printCurrentPosition()
 }
 
 const getCity = async ($event) => {
